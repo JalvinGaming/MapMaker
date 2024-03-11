@@ -1,0 +1,123 @@
+[gd_scene load_steps=11 format=3 uid="uid://twgoddn2idlr"]
+
+[ext_resource type="Script" path="res://CameraMove.gd" id="1_7ybdn"]
+[ext_resource type="Script" path="res://MainScript.gd" id="1_tfgtx"]
+[ext_resource type="StyleBox" uid="uid://bnmf6kbpt1ou6" path="res://block.tres" id="3_k6fem"]
+[ext_resource type="Script" path="res://CursorFollow.gd" id="4_ft1or"]
+
+[sub_resource type="Gradient" id="Gradient_5me7i"]
+colors = PackedColorArray(0, 0.316667, 1, 1, 0, 0.317647, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_0xm7h"]
+gradient = SubResource("Gradient_5me7i")
+width = 256
+height = 256
+
+[sub_resource type="SystemFont" id="SystemFont_rcxqj"]
+font_names = PackedStringArray("Segoe UI")
+font_weight = 500
+
+[sub_resource type="SystemFont" id="SystemFont_6ybyx"]
+font_names = PackedStringArray("Segoe UI")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gv4qr"]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0, 0.239216, 0.243137, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wmnli"]
+size = Vector2(4, 4)
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_tfgtx")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -2
+scale = Vector2(6, 4)
+texture = SubResource("GradientTexture2D_0xm7h")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+script = ExtResource("1_7ybdn")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 50.0
+offset_right = 250.0
+offset_bottom = 180.0
+theme_override_constants/separation = 10
+
+[node name="SelectButton" type="Button" parent="CanvasLayer/Control/VBoxContainer"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_rcxqj")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = ExtResource("3_k6fem")
+theme_override_styles/hover = ExtResource("3_k6fem")
+theme_override_styles/pressed = ExtResource("3_k6fem")
+theme_override_styles/disabled = ExtResource("3_k6fem")
+theme_override_styles/focus = ExtResource("3_k6fem")
+text = "Select"
+
+[node name="CreateButton" type="Button" parent="CanvasLayer/Control/VBoxContainer"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_rcxqj")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = ExtResource("3_k6fem")
+theme_override_styles/hover = ExtResource("3_k6fem")
+theme_override_styles/pressed = ExtResource("3_k6fem")
+theme_override_styles/disabled = ExtResource("3_k6fem")
+theme_override_styles/focus = ExtResource("3_k6fem")
+text = "Create Line"
+
+[node name="ExtendButton" type="Button" parent="CanvasLayer/Control/VBoxContainer"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_rcxqj")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = ExtResource("3_k6fem")
+theme_override_styles/hover = ExtResource("3_k6fem")
+theme_override_styles/pressed = ExtResource("3_k6fem")
+theme_override_styles/disabled = ExtResource("3_k6fem")
+theme_override_styles/focus = ExtResource("3_k6fem")
+text = "Extend Line"
+
+[node name="TextEdit" type="TextEdit" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = 343.0
+offset_top = 50.0
+offset_right = 894.0
+offset_bottom = 114.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_placeholder_color = Color(1, 1, 1, 0.65098)
+theme_override_fonts/font = SubResource("SystemFont_6ybyx")
+theme_override_font_sizes/font_size = 35
+theme_override_styles/normal = SubResource("StyleBoxFlat_gv4qr")
+placeholder_text = "Line Type"
+
+[node name="Area2D" type="Area2D" parent="."]
+priority = 1
+script = ExtResource("4_ft1or")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_wmnli")
+
+[connection signal="button_down" from="CanvasLayer/Control/VBoxContainer/SelectButton" to="." method="_mode2_button"]
+[connection signal="button_down" from="CanvasLayer/Control/VBoxContainer/CreateButton" to="." method="_mode1_button"]
+[connection signal="button_down" from="CanvasLayer/Control/VBoxContainer/ExtendButton" to="." method="_mode0_button"]
+[connection signal="text_changed" from="CanvasLayer/Control/TextEdit" to="." method="_on_type_change"]
