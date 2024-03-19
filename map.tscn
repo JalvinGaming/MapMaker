@@ -39,7 +39,7 @@ script = ExtResource("1_tfgtx")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = -2
-scale = Vector2(6, 4)
+scale = Vector2(240, 160)
 texture = SubResource("GradientTexture2D_0xm7h")
 
 [node name="Camera2D" type="Camera2D" parent="."]
